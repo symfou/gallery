@@ -1,0 +1,9 @@
+fos_user:
+    db_driver: orm
+    firewall_name: api                                   # Seems to be used when registering user/reseting password,
+                                                        # but since there is no "login", as so it seems to be useless in
+                                                        # our particular context, but still required by "FOSUserBundle"
+    user_class: Wbi\Api\UserBundle\Entity\User
+    from_email:
+        address:        noreply@majdi.com
+        sender_name:    Mail Service

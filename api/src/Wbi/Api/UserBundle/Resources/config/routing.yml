@@ -1,0 +1,5 @@
+wbi_api_users:
+    type: rest
+    prefix: /user
+    resource: Wbi\Api\UserBundle\Controller\UserController
+    name_prefix:  api_user_ # naming collision

@@ -1,0 +1,4 @@
+services:
+#    wbi_api_user.example:
+#        class: Wbi\Api\UserBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

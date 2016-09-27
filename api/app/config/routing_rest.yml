@@ -1,0 +1,7 @@
+wbi_api_user:
+    resource: "@WbiApiUserBundle/Resources/config/routing.yml"
+    type:     rest
+
+wbi_api_product:
+    resource: "@WbiApiProductBundle/Resources/config/routing.yml"
+    type: rest

@@ -1,0 +1,5 @@
+wbi_api_products:
+    type: rest
+#    prefix: /product
+    resource: Wbi\Api\ProductBundle\Controller\ProductController
+    name_prefix: api_product_

@@ -1,0 +1,13 @@
+parameters:
+    wbi_api_product.product.handler.class: Wbi\Api\ProductBundle\Handler\ProductHandler
+    wbi_api_product.product.class: Wbi\Api\ProductBundle\Entity\Product
+    wbi_api_product.product.form_type.class: Wbi\Api\ProductBundle\Form\ProductType
+services:
+    wbi_api_product.product.handler:
+        class: %wbi_api_product.product.handler.class%
+        arguments: [@doctrine.orm.entity_manager, %wbi_api_product.product.class%, @form.factory]
+    wbi_api_product.product.form_type:
+        class: %wbi_api_product.product.form_type.class%
+        arguments: [%wbi_api_product.product.class%]
+        tags:
+            - { name: form.type, alias: product_type }
