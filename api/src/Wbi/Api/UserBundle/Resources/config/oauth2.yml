@@ -1,0 +1,19 @@
+parameters:
+    wbi_api_user.oauth2.client.name: 'AngularJS app'
+    wbi_api_user.oauth2.client.redirecturi: 'aa'
+    wbi_api_user.oauth2.client.grant_types: ['token', 'authorization_code', 'password']
+    wbi_api_user.services.oauth2generate_client.class: Wbi\Api\UserBundle\Services\Oauth2GenerateClient
+
+services:
+#    wbi.api.user.example:
+#        class:     Wbi\Api\UserBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+#        calls:
+#            - [setService, ["@service_id"]]
+#        tags:
+#            - { name: twig.extension }
+#            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
+    wbi_api_user.services.oauth2generate_client:
+        class: %wbi_api_user.services.oauth2generate_client.class%
+        arguments: [%wbi_api_user.oauth2.client.redirecturi%, %wbi_api_user.oauth2.client.name%, %wbi_api_user.oauth2.client.grant_types%, @fos_oauth_server.client_manager.default]

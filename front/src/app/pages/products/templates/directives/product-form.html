@@ -1,0 +1,102 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group row clearfix">
+            <label for="inputFirstName" class="col-sm-3 control-label">Picture</label>
+            <div class="col-sm-9">
+                <div class="userpic">
+                    <div class="userpic-wrapper">
+                        <img ng-src="{{ picture }}" ng-click="uploadPicture()">
+                    </div>
+                    <i class="ion-ios-close-outline" ng-click="removePicture()" ng-if="!noPicture"></i>
+                    <a href class="change-userpic" ng-click="uploadPicture()">Change Profile Picture</a>
+                    <input type="file" ng-show="false" id="uploadFile" ng-file-select="onFileSelect($files)">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6"></div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group row clearfix">
+            <label for="inputCode" class="col-sm-3 control-label">Code</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputCode" placeholder="Code" ng-model="product.code">
+            </div>
+        </div>
+        <div class="form-group row clearfix">
+            <label for="inputName" class="col-sm-3 control-label">Name</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputName" placeholder="Name" ng-model="product.name">
+            </div>
+        </div>
+        <div class="form-group row clearfix">
+            <label for="inputPrice" class="col-sm-3 control-label">Price</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputPrice" placeholder="Price" ng-model="product.price">
+            </div>
+        </div>
+        <div class="form-group row clearfix">
+            <label for="inputShortDesciption" class="col-sm-3 control-label">Short Description</label>
+            <div class="col-sm-9">
+                <textarea class="form-control" id="inputShortDesciption" placeholder="short desciption" ng-model="product.short_description"></textarea>
+            </div>
+        </div>
+        <div class="form-group row clearfix">
+            <label for="inputDesciption" class="col-sm-3 control-label">Description</label>
+            <div class="col-sm-9">
+                <textarea class="form-control" id="inputDesciption" placeholder="Desciption" ng-model="product.description"></textarea>
+            </div>
+        </div>
+        <div class="form-group row clearfix">
+            <label for="inputSlug" class="col-sm-3 control-label">slug</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputSlug" placeholder="Slug" ng-model="product.slug">
+            </div>
+        </div>
+        <div class="form-group row clearfix">
+            <label for="inputImage" class="col-sm-3 control-label">image</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputImage" placeholder="Image" ng-model="product.image">
+            </div>
+        </div>
+        <div class="form-group row clearfix">
+            <label for="inputAvailableOn" class="col-sm-3 control-label">available_on</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputAvailableOn" placeholder="AvailableOn" ng-model="product.available_on">
+            </div>
+        </div>
+        <div class="form-group row clearfix">
+            <label for="inputAvailableUntil" class="col-sm-3 control-label">available_until</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputAvailableUntil" placeholder="vat_rate" ng-model="product.available_until">
+            </div>
+        </div>
+        <div class="form-group row clearfix">
+            <label for="inputVatRate" class="col-sm-3 control-label">vat_rate</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputVatRate" placeholder="vat_rate" ng-model="product.vat_rate">
+            </div>
+        </div>
+        <div class="form-group row clearfix">
+            <label for="inputStock" class="col-sm-3 control-label">stock</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputStock" placeholder="Stock" ng-model="product.stock">
+            </div>
+        </div>
+        <div class="form-group row clearfix">
+            <label for="inputisPublished" class="col-sm-3 control-label">is_published</label>
+            <div class="col-sm-9">
+                <input type="checkbox" class="form-control" id="inputisPublished" placeholder="isPublished" ng-model="product.is_published">
+            </div>
+        </div>
+        <div class="form-group row clearfix">
+            <label for="inputIsEnabled" class="col-sm-3 control-label">is_enabled</label>
+            <div class="col-sm-9">
+                <input type="checkbox" class="form-control" id="inputIsEnabled" placeholder="isEnabled" ng-model="product.is_enabled">
+            </div>
+        </div>
+    </div>
+
+</div>

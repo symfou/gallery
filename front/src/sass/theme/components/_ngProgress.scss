@@ -1,0 +1,10 @@
+#ngProgress-container {
+  //background-color: #ffffff;
+  padding: 0 0 1px 0;
+  #ngProgress {
+    box-shadow: none;
+  }
+}
+#ngProgress-container.progressing {
+  background-color: #ffffff;
+}
