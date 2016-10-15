@@ -6,12 +6,15 @@ namespace Wbi\Api\UserBundle\Entity;
 use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Wbi\Api\UserBundle\Entity\Profile as Profile;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * User
  *
  * @ORM\Table("users")
  * @ORM\Entity
+ * @ExclusionPolicy("all")
  */
 class User extends BaseUser
 {
@@ -21,6 +24,7 @@ class User extends BaseUser
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     protected $id;
 	

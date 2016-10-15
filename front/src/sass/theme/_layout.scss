@@ -222,3 +222,24 @@ a {
 .irs-grid-text {
   color: $default-text;
 }
+
+.sk-three-bounce {
+  left: 50%;
+  margin: -15px 0 0 -15px;
+  position: fixed;
+  top: 50%;
+  z-index: 99999;
+}
+
+.body-fade {
+  position:absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(245, 245, 245, 0.85);
+  z-index: 1001;
+  -moz-opacity: 0.8;
+  opacity: .70;
+  filter: alpha(opacity=80);
+}

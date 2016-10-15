@@ -33,15 +33,36 @@ function browserSyncInit(baseDir, browser) {
    *
    * For more details and option, https://github.com/chimurai/http-proxy-middleware/blob/v0.9.0/README.md
    */
-   server.middleware = proxyMiddleware('/api', {target: 'http://majdi.com', changeOrigin: true});
+   //server.middleware = proxyMiddleware('/api', {target: 'majdi.com', changeOrigin: true});
+
+  // configure proxy middleware context
+  var context = '/api';                     // requests with this path will be proxied
+
+// configure proxy middleware options
+  var options = {
+    target: 'http://51.255.41.5:8085', // target host
+    changeOrigin: true,               // needed for virtual hosted sites
+    //ws: true,                         // proxy websockets
+    /*pathRewrite: {
+      '^/old/api' : '/new/api'      // rewrite paths
+    },*/
+    proxyTable: {
+      // when request.headers.host == 'dev.localhost:3000',
+      // override target 'http://www.example.org' to 'http://localhost:8000'
+      //'dev.localhost:3000' : 'http://localhost:8000'
+    }
+  };
+
+  server.middleware = proxyMiddleware(context, options);
 
   browserSync.instance = browserSync.init({
     startPath: '/',
     server: server,
     browser: browser,
     ghostMode: false,
-	port: 80,
-	open: 'external',
+	port:3000,
+    host: "majdi.com",
+	open: 'external'
   });
 }
 

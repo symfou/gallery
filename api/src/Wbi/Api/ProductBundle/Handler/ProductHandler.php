@@ -103,7 +103,7 @@ class ProductHandler implements ProductHandlerInterface
     private function processForm(ProductInterface $product, array $parameters, $method = "PUT")
     {
         $form = $this->formFactory->create('product_type', $product, array('method' => $method));
-        $form->submit($parameters, 'PATCH' !== $method);
+        $form->submit($parameters, "PATCH" !== $method);
         if ($form->isValid()) {
             $product = $form->getData();
             $this->om->persist($product);

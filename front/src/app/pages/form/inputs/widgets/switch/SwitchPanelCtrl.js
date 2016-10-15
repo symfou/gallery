@@ -9,7 +9,7 @@
       .controller('SwitchPanelCtrl', SwitchPanelCtrl);
 
   /** @ngInject */
-  function SwitchPanelCtrl() {
+  function SwitchPanelCtrl($scope) {
     var vm = this;
 
     vm.switcherValues = {
@@ -19,6 +19,10 @@
       info: true,
       success: true
     };
+    $scope.$watch('switchPanelVm.switcherValues.primary', function (value) {
+      console.log(value);
+    })
+
   }
 
 })();

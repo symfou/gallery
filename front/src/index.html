@@ -25,6 +25,15 @@
   <!-- endbuild -->
 </head>
 <body>
+
+<!--<div wbiLoading class="ng-hide">
+<div class="body-fade"></div>
+<div class="sk-three-bounce">
+  <div class="sk-child sk-bounce1"></div>
+  <div class="sk-child sk-bounce2"></div>
+  <div class="sk-child sk-bounce3"></div>
+</div>
+</div>-->
 <div class="body-bg"></div>
 <main ng-if="$pageFinishedLoading" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }">
 
@@ -54,7 +63,7 @@
   <back-top></back-top>
 </main>
 
-<div id="preloader" ng-show="!$pageFinishedLoading">
+<div wbi-spinner id="preloader" ng-show="!$pageFinishedLoading">
   <div></div>
 </div>
 

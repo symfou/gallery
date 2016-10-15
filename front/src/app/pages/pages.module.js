@@ -16,11 +16,25 @@
     'BlurAdmin.pages.charts',
     'BlurAdmin.pages.maps',
     'BlurAdmin.pages.profile',
+    'BlurAdmin.pages.login',
+        'BlurAdmin.pages.products'
   ])
       .config(routeConfig);
 
   /** @ngInject */
-  function routeConfig($urlRouterProvider, baSidebarServiceProvider) {
+  function routeConfig($urlRouterProvider, baSidebarServiceProvider, $authProvider) {
+
+
+
+    $authProvider.baseUrl = '/';
+    $authProvider.loginUrl = '/oauth/v2/token';
+    $authProvider.signupUrl = '/auth/signup';
+    $authProvider.unlinkUrl = '/auth/unlink/';
+    $authProvider.tokenName = 'access_token';
+
+    
+
+
     $urlRouterProvider.otherwise('/dashboard');
 
     baSidebarServiceProvider.addStaticItem({

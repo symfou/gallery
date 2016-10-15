@@ -23,9 +23,8 @@ class UserController extends FOSRestController
     }
 	
 	
-	public function getProfileAction()
+	public function getProfileAction(Request $request)
     {
-        $request = $this->getRequest();
 		$em = $this->getDoctrine()->getManager();
 		$user = $this->getUser();
 		$profile = $user->getProfile();

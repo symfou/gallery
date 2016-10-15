@@ -5,19 +5,20 @@ namespace Wbi\Api\ProductBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 
-/**
- * Class ProductType
- * @package Wbi\Api\ProductBundle\Form
- */
 class ProductType extends AbstractType
 {
+
     protected $entity_class;
 
     public function __construct($entity_class)
     {
         $this->entity_class = $entity_class;
     }
+
 
     /**
      * @param FormBuilderInterface $builder
@@ -26,12 +27,48 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('description')
+            ->add('name', null, array(
+                'constraints' => array(
+                    new NotBlank()
+                )
+            ))
+            ->add('slug')
+            ->add('short_description', null, array(
+                'constraints' => array(
+                    new NotBlank()
+                )
+            ))
+            ->add('description', null, array(
+                'constraints' => array(
+                    new NotBlank()
+                )
+            ))
             ->add('image')
+            ->add('code', null, array(
+                'constraints' => array(
+                    new NotBlank()
+                )
+            ))
+            ->add('available_on', 'datetime')
+            ->add('available_until', 'datetime')
+            ->add('price')
+            ->add('vat_rate')
+            ->add('stock')
+            ->add('is_enabled', null, array(
+                'constraints' => array(
+                    new NotBlank()
+                )
+            ))
+            ->add('is_published', null, array(
+                'constraints' => array(
+                    new NotBlank()
+                )
+            ))
+//            ->add('created_at', 'datetime')
+//            ->add('updated_at', 'datetime')
         ;
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */

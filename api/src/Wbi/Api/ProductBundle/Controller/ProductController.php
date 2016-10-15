@@ -14,6 +14,7 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
+use Wbi\Api\ProductBundle\Entity\Product;
 use Wbi\Api\ProductBundle\Exception\InvalidFormException;
 use Wbi\Api\ProductBundle\Form\ProductType;
 use Wbi\Api\ProductBundle\Model\ProductInterface;
@@ -32,7 +33,7 @@ class ProductController extends FOSRestController
      * )
      *
      * @Annotations\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing products.")
-     * @Annotations\QueryParam(name="limit", requirements="\d+", default="5", description="How many products to return.")
+     * @Annotations\QueryParam(name="limit", requirements="\d+", default="20", description="How many products to return.")
      *
      * @Annotations\View(
      *  templateVar="products"
@@ -98,7 +99,17 @@ class ProductController extends FOSRestController
      */
     public function newProductAction()
     {
-        return $this->createForm(new ProductType());
+        $metadataFactory = $this->get('validator');
+        $metadata = $metadataFactory->getMetadataFor(new ProductType('Wbi\Api\ProductBundle\Entity\Product'));
+
+        $propertiesMetadata = $metadata->properties;
+        $constraints = array();
+
+        foreach ($propertiesMetadata as $propertyMetadata) {
+            $constraints[$propertyMetadata->name] = $propertiesMetadata->constraints;
+        }
+
+        return $constraints;
     }
 
     /**
@@ -126,8 +137,8 @@ class ProductController extends FOSRestController
      */
     public function postProductAction(Request $request)
     {
-        $form = new ProductType('');
         try {
+            $form = new ProductType('');
             $newProduct = $this->container->get('wbi_api_product.product.handler')->post(
                 $request->request->get($form->getName())
             );
@@ -172,17 +183,22 @@ class ProductController extends FOSRestController
      */
     public function putProductAction(Request $request, $id)
     {
+//        $form = new ProductType('');
+//        var_dump($request->request->get($form->getName()));die;
         try {
+            $form = new ProductType('');
             if (!($product = $this->container->get('wbi_api_product.product.handler')->get($id))) {
                 $statusCode = Codes::HTTP_CREATED;
                 $product = $this->container->get('wbi_api_product.product.handler')->post(
                     $request->request->get($form->getName())
                 );
             } else {
+
                 $statusCode = Codes::HTTP_NO_CONTENT;
+                //var_dump($request->request->all());die;
                 $product = $this->container->get('wbi_api_product.product.handler')->put(
                     $product,
-                    $request->request->all()
+                    $request->request->get($form->getName())
                 );
             }
 
@@ -191,7 +207,7 @@ class ProductController extends FOSRestController
                 '_format' => $request->get('_format')
             );
 
-            return $this->routeRedirectView('api_1_get_product', $routeOptions, $statusCode);
+            return $this->routeRedirectView('api_product_get_product', $routeOptions, $statusCode);
 
         } catch (InvalidFormException $exception) {
 
@@ -226,9 +242,10 @@ class ProductController extends FOSRestController
     public function patchProductAction(Request $request, $id)
     {
         try {
+            $form = new ProductType('');
             $product = $this->container->get('wbi_api_product.product.handler')->patch(
                 $this->getOr404($id),
-                $request->request->all()
+                $request->request->get($form->getName())
             );
 
             $routeOptions = array(
@@ -236,7 +253,7 @@ class ProductController extends FOSRestController
                 '_format' => $request->get('_format')
             );
 
-            return $this->routeRedirectView('api_1_get_product', $routeOptions, Codes::HTTP_NO_CONTENT);
+            return $this->routeRedirectView('api_product_get_product', $routeOptions, Codes::HTTP_NO_CONTENT);
 
         } catch (InvalidFormException $exception) {
 
