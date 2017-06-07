@@ -1,0 +1,10 @@
+services:
+#    wbi_api_oauth_server.example:
+#        class: Wbi\Api\OauthServerBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    wbi_api_oauth_server:
+        class: Wbi\Api\OauthServerBundle\Listeners\AuthorizationListener
+        arguments:
+            - %authorized_client%
+        tags:
+            - {name: kernel.event_listener, event: fos_oauth_server.pre_authorization_process, method: preAutorization}

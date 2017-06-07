@@ -1,0 +1,30 @@
+<div class="form-group row clearfix"
+     ng-class="{'has-error': form.$invalid }">
+    <label for="input{{ fieldName | capitalize }}" class="col-sm-3 control-label">{{ fieldName | normalizeLabel }}</label>
+    <div class="col-sm-9">
+        <div ng-switch on="fieldType">
+            <div ng-switch-when="textarea">
+                <textarea class="form-control" id="input{{ fieldName | capitalize }}" placeholder="{{ fieldName | capitalize }}" ng-model="$parent.fieldModel" name="{{ fieldName }}"></textarea>
+                <span ng-show="form.$error.serverError" class="help-block error-block basic-block">{{ fieldErrorMessage }}</span>
+            </div>
+
+            <div ng-switch-when="checkbox">
+                <switch ng-change="setDefaultImage(f.gallery.is_default, f.gallery.id)"
+                        type="checkbox"
+                        name="{{ fieldName }}"
+                        color="primary"
+                        bootstrap-options="{'data-size':'mini', 'data-off-text':'Default', 'data-on-text':'Default', 'data-handle-width':'35px', 'data-wrapper-class':'pull-right', 'data-radio-all-off':'true'}"
+                        ng-model="$parent.fieldModel"
+                ></switch>
+                <span ng-show="form.$error.serverError" class="help-block error-block basic-block">{{ fieldErrorMessage }}</span>
+            </div>
+
+            <div ng-switch-default>
+                <input type="{{ fieldType }}" class="form-control" id="input{{ fieldName | capitalize }}" placeholder="{{ fieldName | capitalize }}" ng-model="$parent.fieldModel" name="{{ fieldName }}">
+                <span ng-show="form.$error.serverError" class="help-block error-block basic-block">{{ fieldErrorMessage }}</span>
+            </div>
+        </div>
+
+
+    </div>
+</div>

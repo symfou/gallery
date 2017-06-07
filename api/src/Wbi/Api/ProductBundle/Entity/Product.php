@@ -3,10 +3,14 @@
 namespace Wbi\Api\ProductBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Wbi\Api\ProductBundle\Model\ProductGalleryInterface;
 use Wbi\Api\ProductBundle\Model\ProductInterface;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Wbi\Api\ProductBundle\Entity\ProductGallery;
+use Wbi\Api\ProductBundle\Model\ProductInfoInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Product
@@ -52,19 +56,14 @@ class Product implements ProductInterface
      */
     protected $shortDescription;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="text",  nullable=true)
-     * @Expose
-     */
-    protected $description;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="image", type="string", length=255, nullable=true)
-     * @Expose
+     * @var
+     *@Expose
+     * @ORM\OneToOne(targetEntity="ProductGallery", cascade={"persist", "merge"})
+     * @ORM\JoinColumns({
+     *  @ORM\JoinColumn(name="image_id", referencedColumnName="id", onDelete="SET NULL")
+     * })
      */
     protected $image;
 
@@ -88,31 +87,11 @@ class Product implements ProductInterface
     protected $availableUntil;
 
 
+
     /**
      * @var string
      *
-     * @ORM\Column(name="price", type="decimal", precision=10, scale=2, nullable=true)
-     * @Expose
-     */
-    protected $price;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="vat_rate", type="decimal", precision=10, scale=2, nullable=true)
-     * @Expose
-     */
-    protected $vatRate;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="stock", type="integer", nullable=true)
-     * @Expose
-     */
-    protected $stock;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="is_enabled", type="boolean", nullable=false)
+     * @ORM\Column(name="is_enabled", type="boolean", nullable=true)
      * @Expose
      */
     protected $isEnabled;
@@ -120,17 +99,14 @@ class Product implements ProductInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="is_published", type="boolean", nullable=false)
+     * @ORM\Column(name="is_published", type="boolean", nullable=true)
      * @Expose
      */
     protected $isPublished;
 
 
 
-    /**
-     * @var GalleryInterface
-     */
-    protected $gallery;
+
 
 
     /**
@@ -150,11 +126,65 @@ class Product implements ProductInterface
 
 
     /**
+     * @var
+     * @ORM\OneToMany(targetEntity="ProductGallery", mappedBy="product", cascade={"persist", "remove", "merge"})
+     */
+    private $gallerys;
+
+    
+
+    /**
+     * @var
+     *@Expose
+     * @ORM\OneToOne(targetEntity="ProductInfo", inversedBy="product", cascade={"persist", "merge"})
+     * @ORM\JoinColumns({
+     *  @ORM\JoinColumn(name="info_id", referencedColumnName="id")
+     * })
+     */
+    private $infos;
+
+    /**
+     * @return mixed
+     */
+    public function getInfos()
+    {
+        return $this->infos;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGallerys()
+    {
+        return $this->gallerys;
+    }
+
+
+
+    /**
      * {@inheritdoc}
      */
     public function __toString()
     {
         return (string)$this->getName();
+    }
+
+    public function __construct()
+    {
+        $this->gallerys = new ArrayCollection();
+    }
+
+
+    public function addProductGallery(ProductGalleryInterface $gallery){
+        $gallery->setProduct($this);
+
+        if (!$this->gallerys->contains($gallery)) {
+            $this->gallerys->add($gallery);
+        }
+    }
+
+    public function setInfos(ProductInfoInterface $infos){
+        $this->infos = $infos;
     }
 
 
@@ -192,29 +222,7 @@ class Product implements ProductInterface
         return $this->name;
     }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return ProductInterface
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
 
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
 
     /**
      * Set image
@@ -376,77 +384,10 @@ class Product implements ProductInterface
         return $this->availableUntil;
     }
 
-    /**
-     * Set price
-     *
-     * @param string $price
-     *
-     * @return ProductInterface
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
 
-        return $this;
-    }
 
-    /**
-     * Get price
-     *
-     * @return string
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
 
-    /**
-     * Set vatRate
-     *
-     * @param string $vatRate
-     *
-     * @return ProductInterface
-     */
-    public function setVatRate($vatRate)
-    {
-        $this->vatRate = $vatRate;
 
-        return $this;
-    }
-
-    /**
-     * Get vatRate
-     *
-     * @return string
-     */
-    public function getVatRate()
-    {
-        return $this->vatRate;
-    }
-
-    /**
-     * Set stock
-     *
-     * @param integer $stock
-     *
-     * @return ProductInterface
-     */
-    public function setStock($stock)
-    {
-        $this->stock = $stock;
-
-        return $this;
-    }
-
-    /**
-     * Get stock
-     *
-     * @return integer
-     */
-    public function getStock()
-    {
-        return $this->stock;
-    }
 
     /**
      * Set enabled
@@ -499,21 +440,7 @@ class Product implements ProductInterface
 
         return $this;
     }
-    /**
-     * @return GalleryInterface
-     */
-    public function getGallery()
-    {
-        return $this->gallery;
-    }
 
-    /**
-     * @param GalleryInterface $gallery
-     */
-    public function setGallery($gallery)
-    {
-        $this->gallery = $gallery;
-    }
 
     /**
      * @return string

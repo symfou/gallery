@@ -105,12 +105,6 @@ swiftmailer:
 
 nelmio_api_doc: ~
 
-fos_rest:
-    routing_loader:
-        default_format: json                            # All responses should be JSON formated
-        include_format: false                           # We do not include format in request, so that all responses
-#    body_listener:
-#        array_normalizer: fos_rest.normalizer.camel_keys                                                        # will eventually be JSON formated
 stof_doctrine_extensions:
     default_locale: en_US
     orm:
@@ -118,6 +112,7 @@ stof_doctrine_extensions:
             tree: true
             timestampable: true # not needed: listeners are not enabled by default
             softdeleteable: true;
+            uploadable: true
 
     # Only used if you activated the Uploadable extension
     uploadable:
@@ -130,6 +125,88 @@ stof_doctrine_extensions:
         # Default file info class implementing FileInfoInterface: Optional. By default we provide a class which is prepared to receive an UploadedFile instance.
         default_file_info_class: Stof\DoctrineExtensionsBundle\Uploadable\UploadedFileInfo
 
+liip_imagine:
+    resolvers:
+        small:
+            web_path:
+                web_root: %kernel.root_dir%/../web
+                cache_prefix: media/cache/small
+        medium:
+            web_path:
+                web_root: %kernel.root_dir%/../web
+                cache_prefix: media/cache/medium
+    filter_sets:
+        small:
+            quality:              ~
+            jpeg_quality:         ~
+            png_compression_level:  ~
+            png_compression_filter: ~
+            animated:             false
+            format:               ~
+            cache:                small
+            data_loader:          ~
+            default_image:        null
+            filters:
+                # use and setup the "relative_resize" filter
+                relative_resize:
+
+                    # given 50x40px, output 32x26px using "widen" option
+                    widen: 200
+
+        original:
+            quality:              75
+            jpeg_quality:         ~
+            png_compression_level:  ~
+            png_compression_filter: ~
+            animated:             false
+            format:               ~
+            data_loader:          ~
+            default_image:        null
+            filters:
+                # use and setup the "watermark" filter
+                watermark:
+                    # path to the watermark file (prepended with "%kernel.root_dir%")
+                    image: Resources/data/watermarker.png
+                    # size of the water mark relative to the input image
+                    size: 0.6
+                    # set the position of the watermark
+                    position: center
+            post_processors:
+                optipng: { strip_all: true, level: 5 }
+                jpegoptim: { strip_all: true, max: 75, progressive: true }
+        medium:
+            quality:              ~
+            jpeg_quality:         ~
+            png_compression_level:  ~
+            png_compression_filter: ~
+            animated:             false
+            format:               ~
+            cache:                medium
+            data_loader:          ~
+            default_image:        null
+            filters:
+                # use and setup the "relative_resize" filter
+                relative_resize:
+
+                    # given 50x40px, output 32x26px using "widen" option
+                    widen: 400
+
+        big:
+            quality:              ~
+            jpeg_quality:         ~
+            png_compression_level:  ~
+            png_compression_filter: ~
+            animated:             false
+            format:               ~
+            cache:                default
+            data_loader:          ~
+            default_image:        null
+            filters:
+                # use and setup the "relative_resize" filter
+                relative_resize:
+
+                    # given 50x40px, output 32x26px using "widen" option
+                    widen: 600
 
 fos_oauth_server:
     db_driver:           orm
@@ -139,10 +216,22 @@ fos_oauth_server:
     auth_code_class:     Wbi\Api\UserBundle\Entity\AuthCode
     service:
         user_provider: fos_user.user_manager             # This property will be used when valid credentials are given to load the user upon access token creation
+        options:
+            #key:                []
+            # supported_scopes: string
 
-wbi_api_user:
-    oauth2:
-        client:
-            name: 'AngularJS app'
-            redirecturi: 'aa'
-            grant_types: ['token', 'authorization_code', 'password']
+            # Changing tokens and authcode lifetime
+            access_token_lifetime: 3600
+            refresh_token_lifetime: 1209600
+            auth_code_lifetime: 3600
+
+            # Token type to respond with. Currently only "Bearer" supported.
+            #token_type: string
+
+            #realm:
+
+            # Enforce redirect_uri on input for both authorize and token steps.
+            #enforce_redirect: true or false
+
+            # Enforce state to be passed in authorization (see RFC 6749, section 10.12)
+#            enforce_state: true or false

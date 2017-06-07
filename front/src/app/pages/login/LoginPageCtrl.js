@@ -8,10 +8,12 @@ angular.module('BlurAdmin.pages.login')
         $scope.login = function() {
 
 
-            $scope.user.client_id = OAUTH2.CLIENT_ID;
+            /*$scope.user.client_id = OAUTH2.CLIENT_ID;
             $scope.user.client_secret = OAUTH2.CLIENT_SECRET;
             $scope.user.grant_type = OAUTH2.GRANT_TYPE;
-            //console.log($scope.user);
+
+
+            
 
             $auth.login($scope.user)
                 .then(function() {
@@ -20,7 +22,7 @@ angular.module('BlurAdmin.pages.login')
                 })
                 .catch(function(error) {
                     toastr.error(error.data.message, error.status);
-                });
+                });*/
         };
         $scope.authenticate = function(provider) {
             $auth.authenticate(provider)

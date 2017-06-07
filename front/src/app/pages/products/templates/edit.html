@@ -3,9 +3,155 @@
 
         <h3 class="with-line">General Information</h3>
 
-        <product-form></product-form>
+        <form name="productEditForm" novalidate onsubmit="return false;">
 
-        <button type="button" class="btn btn-primary btn-with-icon save-profile" ng-click="updatePutProduct(product)">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row clearfix">
+                        <label class="col-sm-3 control-label">Main Image</label>
+                        <div class="col-sm-9">
+                            <div class="userpic product-main-image-thumbnail">
+                                <span class="progress" ng-show="croppedFile.progress >= 0">
+                                    <div ng-style="{width: croppedFile.progressCss}"
+                                         ng-bind="croppedFile.progress + '%'"></div>
+                                </span>
+                                <div class="userpic-wrapper">
+                                    <img ngf-thumbnail="croppedFile || (product.image.url|wbiImage:true)" ng-click="clickMainImage()">
+                                </div>
+                                <i class="ion-ios-close-outline" ng-click="removeMainImage(product.image)" ng-if="!noPicture"></i>
+                                <a href class="change-userpic" ng-click="clickMainImage()">Change Profile Picture</a>
+                                <input ng-show="true"
+                                       ngf-select
+                                       ngf-keep="false"
+                                       ngf-change="selectMainImage($files, $file, $newFiles, $duplicateFiles, $invalidFiles, $event)"
+                                       type="file"
+                                       name="main_image"
+                                       id="uploadMainImage"
+                                       ngf-pattern="'image/*'"
+                                       ngf-accept="'image/*'"
+                                       ngf-capture="'camera'"
+                                       ngf-max-size="5MB"
+                                       ngf-run-all-validations="true"
+                                       \>
+                            </div>
+                            <div class="color-widget text-left">
+                                <div class="section-block red-text  ng-scope text-left">
+                                    <p>{{errorMsg}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <wbi-server-input form="productEditForm.code" field-model="product.code" field-name="code" field-error-message="errors.code" field-label="Code" field-placeholder="Code" field-type="text"></wbi-server-input>
+                    <wbi-server-input form="productEditForm.name" field-model="product.name" field-name="name" field-error-message="errors.name" field-label="Name" field-placeholder="Name" field-type="text"></wbi-server-input>
+                </div>
+                <div class="col-md-6">
+                    <wbi-server-input form="productEditForm.slug" field-model="product.slug" field-name="slug" field-error-message="errors.slug" field-label="Slug" field-placeholder="Slug" field-type="text"></wbi-server-input>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <wbi-server-input form="productEditForm.price" field-model="product.infos.price" field-name="price" field-error-message="errors.price" field-label="Price" field-placeholder="Price" field-type="text"></wbi-server-input>
+                    <wbi-server-input form="productEditForm.vat_rate" field-model="product.infos.vat_rate" field-name="vat_rate" field-error-message="errors.vat_rate" field-label="Vat" field-placeholder="Vat" field-type="text"></wbi-server-input>
+                    <wbi-server-input form="productEditForm.stock" field-model="product.infos.stock" field-name="stock" field-error-message="errors.stock" field-label="Stock" field-placeholder="Stock" field-type="text"></wbi-server-input>
+                </div>
+                <div class="col-md-6">
+                    <wbi-server-input form="productEditForm.available_on" field-model="product.available_on" field-name="available_on" field-error-message="errors.available_on" field-label="Available" field-placeholder="Available" field-type="date"></wbi-server-input>
+                    <wbi-server-input form="productEditForm.available_until" field-model="product.available_until" field-name="available_until" field-error-message="errors.available_until" field-label="Until" field-placeholder="Until" field-type="date"></wbi-server-input>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <wbi-server-input form="productEditForm.short_description" field-model="product.short_description" field-name="short_description" field-error-message="errors.short_description" field-label="Short description" field-placeholder="Short description" field-type="textarea"></wbi-server-input>
+                    <wbi-server-input form="productEditForm.description" field-model="product.infos.description" field-name="description" field-error-message="errors.description" field-label="Description" field-placeholder="Description" field-type="textarea"></wbi-server-input>
+                </div>
+                <div class="col-md-6">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <wbi-server-input form="productEditForm.is_enabled" field-model="product.is_enabled" field-name="is_enabled" field-error-message="errors.is_enabled" field-label="Is Enabled" field-placeholder="Is Enabled" field-type="checkbox"></wbi-server-input>
+                    <wbi-server-input form="productEditForm.is_published" field-model="product.is_published" field-name="is_published" field-error-message="errors.is_published" field-label="Is published" field-placeholder="Is published" field-type="checkbox"></wbi-server-input>
+                </div>
+            </div>
+
+            <div class="row clearfix">
+                <h4>Upload on file select</h4>
+                <button
+                        class="btn btn-danger btn-lg"
+                        ngf-select
+                        ngf-multiple="true"
+                        ngf-keep="false"
+                        ngf-change="selectImage($files, $file, $newFiles, $duplicateFiles, $invalidFiles, $event)"
+                        type="file"
+                        name="file"
+                        ngf-pattern="'image/*'"
+                        ngf-accept="'image/*'"
+                        ngf-capture="'camera'"
+                        ngf-max-size="5MB"
+                        ngf-max-files="10"
+                        ngf-run-all-validations="true"
+                ><i class="fa fa fa-image" aria-hidden="true"></i> Select images</button>
+
+
+                <div class="color-widget text-left">
+                    <div class="section-block red-text  ng-scope text-left">
+                        <p>{{errorMsg}}</p>
+                    </div>
+                </div>
+
+                <div class="product-thumbnails">
+                    <div class="product-thumbnail" ng-repeat="(key, f) in thumbnails" ng-controller="FileCtrl" id="product-thumbnail-{{ key }}">
+                        <div class="image-thumbnail">
+                            <img class="img-rounded" ngf-no-object-url="false" ngf-size="{width: 135, height: 135, quality: 1.0}" ngf-thumbnail="f || '/thumb.jpg'">
+                        </div>
+
+                        <span class="progress" ng-show="f.progress >= 0">
+                            <div ng-style="{width: f.progressCss}"
+                                 ng-bind="f.progress + '%'"></div>
+                        </span>
+
+                        <div class = "caption">
+                            <div class="thumbnail-name">
+                                <h5>{{f.gallery.name || f.name}}</h5>
+                            </div>
+                            <span>{{f.$errorParam}}</span>
+                                <a ng-click="deleteImage(f.gallery, key)" class="btn btn-default btn-xs pull-right" role="button">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                </a>
+                            <!--<switch ng-change="setDefaultImage(f.gallery.is_default, f.gallery.id)"
+                                    type="radio"
+                                    name="defaultImage"
+                                    color="primary"
+                                    class="pull-left"
+                                    bootstrap-options="{'data-size':'mini', 'data-off-text':'Default', 'data-on-text':'Default', 'data-handle-width':'35px', 'data-wrapper-class':'pull-right', 'data-radio-all-off':'true'}"
+                                    ng-model="f.gallery.is_default"
+                            ></switch>-->
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <ul>
+                        <li ng-repeat="f in errFiles" style="font-size: smaller;">
+                            <div class="color-widget text-left">
+                                <div class="section-block red-text  ng-scope text-left">
+                                    <p>{{f.name}}: {{f.$error}} {{f.$errorParam}}</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+
+        <button type="button" class="btn btn-primary btn-with-icon save-profile" ng-click="updatePutProduct(productEditForm)">
             <i class="ion-android-checkmark-circle"></i>Update Profile
         </button>
     </div>

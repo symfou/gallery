@@ -10,4 +10,11 @@ namespace Wbi\Api\ProductBundle\Repository;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
+    /*public function getProduct($id){
+        $q = $this->createQueryBuilder()
+            ->select('p.*, p.image')
+            ->leftJoin('p.gallerys', 'gallerys')
+            ->where('p.id = :id)
+            ->
+    }*/
 }

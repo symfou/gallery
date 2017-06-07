@@ -13,26 +13,42 @@
     return {
       restrict: 'EA',
       replace: true,
+      require: 'ngModel',
       scope: {
-        ngModel: '=',
-        ngChange: '&'
+        bootstrapOptions: '='
       },
       template: function(el, attrs) {
-        return '<div class="switch-container ' + (attrs.color || '') + '"><input type="checkbox" ng-model="ngModel" ng-change="ngChange"></div>';
-      },
-      link: function (scope, elem, attr) {
-        $timeout(function(){
-          var input = $(elem).find('input');
-          input.bootstrapSwitch({
-            size: 'small',
-            onColor: attr.color
-          });
-          input.on('switchChange.bootstrapSwitch', function(event, state) {
-            scope.ngModel = state;
-            scope.$apply();
-          });
 
-        });
+        return '<div class="switch-container ' + (attrs.color || '' + attrs.class || '') + '"><input type="'+attrs.type+'" name="'+attrs.name+'"></div>';
+      },
+      link: function (scope, elem, attr, ctrl) {
+              var input = $(elem).find('input');
+              if (scope.bootstrapOptions) {
+                  $.each(scope.bootstrapOptions, function (key, val) {
+                      if (val == "" || val == null) {
+                          input.attr(key, "");
+                      } else {
+                          input.attr(key, val);
+                      }
+                  })
+              }
+              input.bootstrapSwitch({
+                  onColor: attr.color
+              });
+
+              input.on('switchChange.bootstrapSwitch', function (event, state) {
+                  if (ctrl.$modelValue === state){
+                      // ctrl.$setViewValue(!state);
+                      ctrl.$setViewValue(state);
+                  }else {
+                      ctrl.$setViewValue(state);
+                  }
+              });
+
+              // update the color picker whenever the value on the scope changes
+              ctrl.$render = function () {
+                  input.bootstrapSwitch('state', ctrl.$modelValue);
+              };
       }
     };
   }

@@ -14,7 +14,7 @@
         .state('ui.modals', {
           url: '/modals',
           templateUrl: 'app/pages/ui/modals/modals.html',
-          controller: 'ModalsPageCtrl',
+          controller: 'ModalDemoCtrl',
           title: 'Modals',
           sidebarMeta: {
             order: 300,

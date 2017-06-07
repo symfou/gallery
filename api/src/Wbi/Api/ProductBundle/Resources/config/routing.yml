@@ -3,3 +3,9 @@ wbi_api_products:
 #    prefix: /product
     resource: Wbi\Api\ProductBundle\Controller\ProductController
     name_prefix: api_product_
+wbi_api_products_gallerys:
+    type: rest
+#    prefix: /product
+    resource: Wbi\Api\ProductBundle\Controller\ProductGalleryController
+    name_prefix: api_product_gallery_
+    parent: wbi_api_products

@@ -24,6 +24,9 @@ class AppKernel extends Kernel
             new Wbi\Api\UserBundle\WbiApiUserBundle(),
             new Wbi\Api\ProductBundle\WbiApiProductBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Liip\ImagineBundle\LiipImagineBundle(),
+            new Wbi\Api\OauthServerBundle\WbiApiOauthServerBundle(),
+            new OAuth2\ClientBundle\OAuth2ClientBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

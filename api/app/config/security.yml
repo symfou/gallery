@@ -1,22 +1,29 @@
-security: 
+security:
     encoders:
-        FOS\UserBundle\Model\UserInterface: sha512
+        OAuth2\ClientBundle\Security\User\OAuth2User: plaintext
 
     role_hierarchy:
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_API, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
-        fos_userbundle:
-            id: fos_user.user_provider.username_email        # fos_user.user_provider.username_email does not seem to work (OAuth-spec related ("username + password") ?)
+        oauth2_client:
+            id: oauth2.client.user_provider
+
     firewalls:
-        oauth_token:                                   # Everyone can access the access token URL.
-            pattern: ^/oauth/v2/token
-            security: false
         api:
-            pattern: ^/                                # All URLs are protected
-            fos_oauth: true                            # OAuth2 protected resource
+            pattern: ^/api/(.*)                                # All URLs are protected
+#            fos_oauth: true                            # OAuth2 protected resource
+            oauth2_access_token:
+                check_path: oauth2_client_check
+                login_path: oauth2_client_login
             stateless: true                            # Do no set session cookies
-            anonymous: true                           # Anonymous access is not allowed
+            anonymous: false                           # Anonymous access is not allowed
+#            guard:
+#                authenticators:
+#                    - wbi_store_authenticator
+        api_doc:
+            pattern:      ^/api/doc
+            security:     false
 
     access_control:
         - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }

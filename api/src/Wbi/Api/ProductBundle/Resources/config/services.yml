@@ -1,13 +1,62 @@
 parameters:
     wbi_api_product.product.handler.class: Wbi\Api\ProductBundle\Handler\ProductHandler
     wbi_api_product.product.class: Wbi\Api\ProductBundle\Entity\Product
+    wbi_api_product.product.gallery.class: Wbi\Api\ProductBundle\Entity\ProductGallery
     wbi_api_product.product.form_type.class: Wbi\Api\ProductBundle\Form\ProductType
 services:
     wbi_api_product.product.handler:
         class: %wbi_api_product.product.handler.class%
-        arguments: [@doctrine.orm.entity_manager, %wbi_api_product.product.class%, @form.factory]
+        arguments:
+            - @doctrine.orm.entity_manager
+            - %wbi_api_product.product.class%
+            - @form.factory
+            - @stof_doctrine_extensions.uploadable.manager
+            - @security.token_storage
+
+    wbi_api_product.product.gallery.handler:
+        class: Wbi\Api\ProductBundle\Handler\ProductGalleryHandler
+        arguments:
+            - @doctrine.orm.entity_manager
+            - %wbi_api_product.product.gallery.class%
+            - @stof_doctrine_extensions.uploadable.manager
+            - @form.factory
+            - %product_max_upload_file%
+            - @security.token_storage
+
     wbi_api_product.product.form_type:
         class: %wbi_api_product.product.form_type.class%
         arguments: [%wbi_api_product.product.class%]
         tags:
             - { name: form.type, alias: product_type }
+
+    wbi_api.uploader:
+        class: Wbi\Api\ProductBundle\Handler\UploadHandler
+        arguments: ['%upload_directory%']
+
+
+    wbi_api_product.product_gallery_serializer_subscriber:
+        class: Wbi\Api\ProductBundle\Serialize\ProductGallerySerializerSubscriber
+        arguments:
+            - %admin_url%
+            - %kernel.root_dir%
+            - @liip_imagine.cache.manager
+        tags:
+            - { name: jms_serializer.event_subscriber }
+
+    wbi_api_product.product_gallery.doctrine.listener:
+        class: Wbi\Api\ProductBundle\Handler\ProductGalleryListener
+        arguments:
+#            - @liip_imagine.controller
+            - @liip_imagine.filter.manager
+            - @liip_imagine.data.manager
+            - @filesystem
+            - %kernel.root_dir%/../web/
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: uploadablePostFileProcess }
+
+    wbi_store_authenticator:
+        class: Wbi\Api\ProductBundle\Security\StoreAuthenticator
+        arguments:
+            - @fos_oauth_server.server
+            - @fos_user.user_manager

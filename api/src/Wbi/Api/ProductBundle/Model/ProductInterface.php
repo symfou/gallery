@@ -1,22 +1,31 @@
 <?php
 /**
- * Copyright (c) 2016. $name
- */
-
-/**
  * Created by PhpStorm.
  * User: majdi
- * Date: 01/10/2016
- * Time: 02:49
+ * Date: 09/11/2016
+ * Time: 12:45
  */
 namespace Wbi\Api\ProductBundle\Model;
-
 use Wbi\Api\ProductBundle\Entity\date;
-use Wbi\Api\ProductBundle\Entity\GalleryInterface;
+
 
 
 interface ProductInterface
 {
+    /**
+     * @return mixed
+     */
+    public function getInfos();
+
+    /**
+     * @return mixed
+     */
+    public function getGallerys();
+
+    public function addProductGallery(ProductGalleryInterface $gallery);
+
+    public function setInfos(ProductInfoInterface $infos);
+
     /**
      * Get id
      *
@@ -39,22 +48,6 @@ interface ProductInterface
      * @return string
      */
     public function getName();
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return ProductInterface
-     */
-    public function setDescription($description);
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription();
 
     /**
      * Set image
@@ -163,61 +156,13 @@ interface ProductInterface
     public function getAvailableUntil();
 
     /**
-     * Set price
-     *
-     * @param string $price
-     *
-     * @return ProductInterface
-     */
-    public function setPrice($price);
-
-    /**
-     * Get price
-     *
-     * @return string
-     */
-    public function getPrice();
-
-    /**
-     * Set vatRate
-     *
-     * @param string $vatRate
-     *
-     * @return ProductInterface
-     */
-    public function setVatRate($vatRate);
-
-    /**
-     * Get vatRate
-     *
-     * @return string
-     */
-    public function getVatRate();
-
-    /**
-     * Set stock
-     *
-     * @param integer $stock
-     *
-     * @return ProductInterface
-     */
-    public function setStock($stock);
-
-    /**
-     * Get stock
-     *
-     * @return integer
-     */
-    public function getStock();
-
-    /**
      * Set enabled
      *
      * @param boolean $enabled
      *
      * @return ProductInterface
      */
-    public function setIsEnabled($enabled);
+    public function setIsEnabled($isEnabled);
 
     /**
      * Get enabled
@@ -243,16 +188,6 @@ interface ProductInterface
      * @return ProductInterface
      */
     public function setUpdatedAt($updatedAt);
-
-    /**
-     * @return GalleryInterface
-     */
-    public function getGallery();
-
-    /**
-     * @param GalleryInterface $gallery
-     */
-    public function setGallery($gallery);
 
     /**
      * @return string

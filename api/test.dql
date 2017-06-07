@@ -1,0 +1,109 @@
+array(1) {
+  [0]=>
+  array(2) {
+    [0]=>
+    array(13) {
+      ["id"]=>
+      int(1522)
+      ["name"]=>
+      string(13) "my product 94"
+      ["slug"]=>
+      string(18) "my product from 94"
+      ["shortDescription"]=>
+      string(27) "Lorem ipsum dolor sit amet."
+      ["image"]=>
+      NULL
+      ["code"]=>
+      string(4) "0094"
+      ["availableOn"]=>
+      NULL
+      ["availableUntil"]=>
+      NULL
+      ["isEnabled"]=>
+      bool(true)
+      ["isPublished"]=>
+      bool(true)
+      ["createdAt"]=>
+      object(stdClass)#563 (3) {
+        ["__CLASS__"]=>
+        string(8) "DateTime"
+        ["date"]=>
+        string(25) "2016-11-09T13:56:28+01:00"
+        ["timezone"]=>
+        string(13) "Europe/Berlin"
+      }
+      ["updatedAt"]=>
+      object(stdClass)#553 (3) {
+        ["__CLASS__"]=>
+        string(8) "DateTime"
+        ["date"]=>
+        string(25) "2016-11-09T13:56:28+01:00"
+        ["timezone"]=>
+        string(13) "Europe/Berlin"
+      }
+      ["gallerys"]=>
+      array(3) {
+        [0]=>
+        array(8) {
+          ["id"]=>
+          int(447)
+          ["name"]=>
+          string(24) "logo-jordanie-skynet.jpg"
+          ["type"]=>
+          string(10) "image/jpeg"
+          ["extention"]=>
+          NULL
+          ["url"]=>
+          string(65) "uploads/product/1522/07a7a0d7cdc8af13d93d7ebeb84e463955151690.jpg"
+          ["thumbnailUrl"]=>
+          NULL
+          ["folder"]=>
+          NULL
+          ["is_default"]=>
+          bool(true)
+        }
+        [1]=>
+        array(8) {
+          ["id"]=>
+          int(448)
+          ["name"]=>
+          string(13) "allemagne.jpg"
+          ["type"]=>
+          string(10) "image/jpeg"
+          ["extention"]=>
+          NULL
+          ["url"]=>
+          string(65) "uploads/product/1522/47308807c9d6b0fec9d0ef7fb70e331a822b66d7.jpg"
+          ["thumbnailUrl"]=>
+          NULL
+          ["folder"]=>
+          NULL
+          ["is_default"]=>
+          bool(false)
+        }
+        [2]=>
+        array(8) {
+          ["id"]=>
+          int(449)
+          ["name"]=>
+          string(13) "bvdv 248.jpeg"
+          ["type"]=>
+          string(10) "image/jpeg"
+          ["extention"]=>
+          NULL
+          ["url"]=>
+          string(66) "uploads/product/1522/62743dd94329cee7f961234cce4332ef89a9c8e6.jpeg"
+          ["thumbnailUrl"]=>
+          NULL
+          ["folder"]=>
+          NULL
+          ["is_default"]=>
+          bool(false)
+        }
+      }
+    }
+    ["default_image"]=>
+    string(3) "447"
+  }
+}
+

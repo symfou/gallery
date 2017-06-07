@@ -1,102 +1,72 @@
-<div class="row">
-    <div class="col-md-6">
-        <div class="form-group row clearfix">
-            <label for="inputFirstName" class="col-sm-3 control-label">Picture</label>
-            <div class="col-sm-9">
-                <div class="userpic">
-                    <div class="userpic-wrapper">
-                        <img ng-src="{{ picture }}" ng-click="uploadPicture()">
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group row clearfix">
+                <label for="inputFirstName" class="col-sm-3 control-label">Picture</label>
+                <div class="col-sm-9">
+                    <div class="userpic">
+                        <div class="userpic-wrapper">
+                            <img ng-src="{{ picture }}" ng-click="uploadPicture()">
+                        </div>
+                        <i class="ion-ios-close-outline" ng-click="removePicture()" ng-if="!noPicture"></i>
+                        <a href class="change-userpic" ng-click="uploadPicture()">Change Profile Picture</a>
+                        <input type="file" ng-show="false" id="uploadFile" ng-file-select="onFileSelect($files)">
                     </div>
-                    <i class="ion-ios-close-outline" ng-click="removePicture()" ng-if="!noPicture"></i>
-                    <a href class="change-userpic" ng-click="uploadPicture()">Change Profile Picture</a>
-                    <input type="file" ng-show="false" id="uploadFile" ng-file-select="onFileSelect($files)">
                 </div>
             </div>
         </div>
+        <div class="col-md-6"></div>
     </div>
-    <div class="col-md-6"></div>
-</div>
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="form-group row clearfix">
-            <label for="inputCode" class="col-sm-3 control-label">Code</label>
-            <div class="col-sm-9">
-                <input type="text" class="form-control" id="inputCode" placeholder="Code" ng-model="product.code">
-            </div>
+    <div class="row">
+        <div class="col-md-6">
+
+            <wbi-server-input form="productEditForm.code" field-model="product.code" field-name="code" field-error-message="errors.code" field-label="Code" field-placeholder="Code" field-type="text"></wbi-server-input>
+
+            <wbi-server-input form="productEditForm.name" field-model="product.name" field-name="name" field-error-message="errors.name" field-label="Name" field-placeholder="Name" field-type="text"></wbi-server-input>
+
+            <wbi-server-input form="productEditForm.price" field-model="product.price" field-name="price" field-error-message="errors.price" field-label="Price" field-placeholder="Price" field-type="text"></wbi-server-input>
+
+            <wbi-server-input form="productEditForm.short_description" field-model="product.short_description" field-name="short_description" field-error-message="errors.short_description" field-label="Short description" field-placeholder="Short description" field-type="textarea"></wbi-server-input>
+
+            <wbi-server-input form="productEditForm.description" field-model="product.description" field-name="description" field-error-message="errors.description" field-label="Description" field-placeholder="Description" field-type="textarea"></wbi-server-input>
+
+            <wbi-server-input form="productEditForm.slug" field-model="product.slug" field-name="slug" field-error-message="errors.slug" field-label="Slug" field-placeholder="Slug" field-type="text"></wbi-server-input>
+
+            <wbi-server-input form="productEditForm.image" field-model="product.image" field-name="image" field-error-message="errors.image" field-label="Image" field-placeholder="Image" field-type="text"></wbi-server-input>
+
+            <wbi-server-input form="productEditForm.available_on" field-model="product.available_on" field-name="available_on" field-error-message="errors.available_on" field-label="Available" field-placeholder="Available" field-type="date"></wbi-server-input>
+
+            <wbi-server-input form="productEditForm.available_until" field-model="product.available_until" field-name="available_until" field-error-message="errors.available_until" field-label="Until" field-placeholder="Until" field-type="date"></wbi-server-input>
+
+            <wbi-server-input form="productEditForm.vat_rate" field-model="product.vat_rate" field-name="vat_rate" field-error-message="errors.vat_rate" field-label="Vat" field-placeholder="Vat" field-type="text"></wbi-server-input>
+
+            <wbi-server-input form="productEditForm.stock" field-model="product.stock" field-name="stock" field-error-message="errors.stock" field-label="Stock" field-placeholder="Stock" field-type="text"></wbi-server-input>
+
+            <wbi-server-input form="productEditForm.is_published" field-model="product.is_published" field-name="is_published" field-error-message="errors.is_published" field-label="Is published" field-placeholder="Is published" field-type="checkbox"></wbi-server-input>
+
+            <wbi-server-input form="productEditForm.is_enabled" field-model="product.is_enabled" field-name="is_enabled" field-error-message="errors.is_enabled" field-label="Is Enabled" field-placeholder="Is Enabled" field-type="checkbox"></wbi-server-input>
+
+
+
+
+
+
         </div>
-        <div class="form-group row clearfix">
-            <label for="inputName" class="col-sm-3 control-label">Name</label>
-            <div class="col-sm-9">
-                <input type="text" class="form-control" id="inputName" placeholder="Name" ng-model="product.name">
-            </div>
-        </div>
-        <div class="form-group row clearfix">
-            <label for="inputPrice" class="col-sm-3 control-label">Price</label>
-            <div class="col-sm-9">
-                <input type="text" class="form-control" id="inputPrice" placeholder="Price" ng-model="product.price">
-            </div>
-        </div>
-        <div class="form-group row clearfix">
-            <label for="inputShortDesciption" class="col-sm-3 control-label">Short Description</label>
-            <div class="col-sm-9">
-                <textarea class="form-control" id="inputShortDesciption" placeholder="short desciption" ng-model="product.short_description"></textarea>
-            </div>
-        </div>
-        <div class="form-group row clearfix">
-            <label for="inputDesciption" class="col-sm-3 control-label">Description</label>
-            <div class="col-sm-9">
-                <textarea class="form-control" id="inputDesciption" placeholder="Desciption" ng-model="product.description"></textarea>
-            </div>
-        </div>
-        <div class="form-group row clearfix">
-            <label for="inputSlug" class="col-sm-3 control-label">slug</label>
-            <div class="col-sm-9">
-                <input type="text" class="form-control" id="inputSlug" placeholder="Slug" ng-model="product.slug">
-            </div>
-        </div>
-        <div class="form-group row clearfix">
-            <label for="inputImage" class="col-sm-3 control-label">image</label>
-            <div class="col-sm-9">
-                <input type="text" class="form-control" id="inputImage" placeholder="Image" ng-model="product.image">
-            </div>
-        </div>
-        <div class="form-group row clearfix">
-            <label for="inputAvailableOn" class="col-sm-3 control-label">available_on</label>
-            <div class="col-sm-9">
-                <input type="text" class="form-control" id="inputAvailableOn" placeholder="AvailableOn" ng-model="product.available_on">
-            </div>
-        </div>
-        <div class="form-group row clearfix">
-            <label for="inputAvailableUntil" class="col-sm-3 control-label">available_until</label>
-            <div class="col-sm-9">
-                <input type="text" class="form-control" id="inputAvailableUntil" placeholder="vat_rate" ng-model="product.available_until">
-            </div>
-        </div>
-        <div class="form-group row clearfix">
-            <label for="inputVatRate" class="col-sm-3 control-label">vat_rate</label>
-            <div class="col-sm-9">
-                <input type="text" class="form-control" id="inputVatRate" placeholder="vat_rate" ng-model="product.vat_rate">
-            </div>
-        </div>
-        <div class="form-group row clearfix">
-            <label for="inputStock" class="col-sm-3 control-label">stock</label>
-            <div class="col-sm-9">
-                <input type="text" class="form-control" id="inputStock" placeholder="Stock" ng-model="product.stock">
-            </div>
-        </div>
-        <div class="form-group row clearfix">
-            <label for="inputisPublished" class="col-sm-3 control-label">is_published</label>
-            <div class="col-sm-9">
-                <input type="checkbox" class="form-control" id="inputisPublished" placeholder="isPublished" ng-model="product.is_published">
-            </div>
-        </div>
-        <div class="form-group row clearfix">
-            <label for="inputIsEnabled" class="col-sm-3 control-label">is_enabled</label>
-            <div class="col-sm-9">
-                <input type="checkbox" class="form-control" id="inputIsEnabled" placeholder="isEnabled" ng-model="product.is_enabled">
+
+    </div>
+
+    <div class="row clearfix">
+        <h4>Upload on file select</h4>
+        <button ngf-select="selectImages(files)" ng-model="files" ngf-multiple="true" name="file" ngf-pattern="'image/*'"
+                ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+                >Select</button>
+        <br><br>
+
+        Files:
+        <div class="product-thumbnails row">
+            <div class="product-thumbnail">
+                <img class="img-rounded" ng-repeat="f in thumbnails" ngf-no-object-url="false" ngf-size="{width: 135, height: 135, quality: 0.9}" ngf-thumbnail="f || '/thumb.jpg'">
             </div>
         </div>
     </div>
-
-</div>

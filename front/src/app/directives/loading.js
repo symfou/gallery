@@ -26,7 +26,7 @@ angular.module('BlurAdmin')
                     }
                 });*/
                 scope.progressbar = ngProgressFactory.createInstance();
-                scope.progressbar.setColor('#209e91');
+                scope.progressbar.setColor('#b91f1f');
                 var e = scope.progressbar.addProgressElementClass('progressing');
                 scope.progressbar.setHeight('5px');
 

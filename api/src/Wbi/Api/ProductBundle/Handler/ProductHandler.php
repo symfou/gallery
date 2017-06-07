@@ -3,7 +3,11 @@
 namespace Wbi\Api\ProductBundle\Handler;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Security\Core\Security;
+use Wbi\Api\ProductBundle\Entity\ProductGallery;
+use Wbi\Api\ProductBundle\Form\ProductGalleryType;
 use Wbi\Api\ProductBundle\Model\ProductInterface;
 use Wbi\Api\ProductBundle\Form\ProductType;
 use Wbi\Api\ProductBundle\Exception\InvalidFormException;
@@ -15,13 +19,20 @@ class ProductHandler implements ProductHandlerInterface
     private $entityClass;
     private $repository;
     private $formFactory;
+    private $uploader;
+    private $security;
+    
 
-    public function __construct(ObjectManager $om, $entityClass, FormFactoryInterface $formFactory)
+    public function __construct(ObjectManager $om, $entityClass, FormFactoryInterface $formFactory, $uploader, $security)
     {
         $this->om = $om;
         $this->entityClass = $entityClass;
         $this->repository = $this->om->getRepository($this->entityClass);
         $this->formFactory = $formFactory;
+        $this->uploader = $uploader;
+        $this->security = $security;
+        $this->user = $security->getToken()->getUser();
+        
     }
 
     /**
@@ -33,7 +44,7 @@ class ProductHandler implements ProductHandlerInterface
      */
     public function get($id)
     {
-        return $this->repository->find($id);
+        return $this->repository->findBy(['id' => $id, 'user_id' => $this->user->getId()]);
     }
 
     /**
@@ -62,6 +73,9 @@ class ProductHandler implements ProductHandlerInterface
 
         return $this->processForm($product, $parameters, 'POST');
     }
+
+
+    
 
     /**
      * Edit a product.
@@ -102,9 +116,13 @@ class ProductHandler implements ProductHandlerInterface
      */
     private function processForm(ProductInterface $product, array $parameters, $method = "PUT")
     {
-        $form = $this->formFactory->create('product_type', $product, array('method' => $method));
+        $form = $this->formFactory->create('product_type', $product, array(
+            'method' => $method,
+            'isNew' => $product->getId() ? false : true
+        ));
         $form->submit($parameters, "PATCH" !== $method);
         if ($form->isValid()) {
+
             $product = $form->getData();
             $this->om->persist($product);
             $this->om->flush($product);

@@ -1,0 +1,11 @@
+- l'utilisateur ne doit pas quitter le dormulaire edit product avant qu'il le valide, parceque les images seront déjà enregistrés..
+- mettre le form edit product en inline et ajouter les titres...
+- terminer le listing product 
+- permettre de tager l'image defautlt..
+- relier les roduit à un utilisateur
+- le bundle product doit etre dans une autre application que l'api principale (fournisseur de compte et d'applications ...)
+- ajouter des meta data aus images (alt ...)
+- permettre d'ordonner les images
+- ajouter le gestionnaire de catégories
+- créer product provider (sonata)
+- réfléchir à une methode pour les optimisations des images

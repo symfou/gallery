@@ -3,9 +3,10 @@
     <button type="button" class="close" ng-click="$dismiss()" aria-label="Close">
       <em class="ion-ios-close-empty sn-link-close"></em>
     </button>
-    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+    <h4 class="modal-title" id="myModalLabel">{{name}}</h4>
   </div>
   <div class="modal-body">
+    <div ng-repeat="t in items">t</div>
     Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
     dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
     suscipit lobortis nisl ut aliquip ex ea commodo consequat.

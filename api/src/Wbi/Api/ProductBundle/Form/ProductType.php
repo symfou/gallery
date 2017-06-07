@@ -38,12 +38,7 @@ class ProductType extends AbstractType
                     new NotBlank()
                 )
             ))
-            ->add('description', null, array(
-                'constraints' => array(
-                    new NotBlank()
-                )
-            ))
-            ->add('image')
+            
             ->add('code', null, array(
                 'constraints' => array(
                     new NotBlank()
@@ -51,21 +46,22 @@ class ProductType extends AbstractType
             ))
             ->add('available_on', 'datetime')
             ->add('available_until', 'datetime')
-            ->add('price')
-            ->add('vat_rate')
-            ->add('stock')
+            
             ->add('is_enabled', null, array(
                 'constraints' => array(
-                    new NotBlank()
+//                    new NotBlank()
                 )
             ))
             ->add('is_published', null, array(
                 'constraints' => array(
-                    new NotBlank()
+//                    new NotBlank()
                 )
-            ))
+            ));
 //            ->add('created_at', 'datetime')
 //            ->add('updated_at', 'datetime')
+              if (!$options['isNew']) {
+                  $builder->add('infos', new ProductInfoType());
+              }
         ;
     }
 
@@ -76,6 +72,7 @@ class ProductType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => $this->entity_class,
+            'isNew' => true
         ));
     }
 

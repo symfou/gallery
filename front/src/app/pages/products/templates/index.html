@@ -91,15 +91,17 @@
                                         </label>
                                     </div>
                                 </td>
-                                <td  class="photo-td" ui-sref="components.mail.detail({id: m.id, label: listCtrl.label})"><img ng-src="{{m.name.split(' ')[0] | profilePicture}}" class="little-human-picture"></td>
-                                <td  ui-sref="products.detail({id: product.id})">
+                                <td  class="photo-td" ui-sref="products.edit({id: product.id})">
+                                    <img ng-src="{{product.image.url | wbiImage:true}}" class="little-human-picture">
+                                </td>
+                                <td  ui-sref="products.edit({id: product.id})">
                                     <div class="name-container">
                                         <div><span class="name">{{product.name}}</span></div>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="additional-info">
-                                        <switch color="primary" ng-model="product.is_published" ng-change="updateProductValue(product)"></switch>
+                                        <switch type="checkbox" bootstrap-options="{'data-size':'mini'}" color="primary" data-size="mini" ng-model="product.is_published" ng-change="updateProductValue(product)"></switch>
                                     </div>
                                 </td>
                                 <td>

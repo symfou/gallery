@@ -1,4 +1,9 @@
+wbi_api_oauth_server:
+    resource: "@WbiApiOauthServerBundle/Resources/config/routing.yml"
+    prefix:   /
 
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
 
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
@@ -30,6 +35,128 @@ fos_oauth_server_token:
 
 fos_oauth_server_authorize:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"
+fos_user_change_password:
+    pattern: /profile/password/change
+    defaults: { _controller: FOSUserBundle:ChangePassword:changePassword }
+    requirements:
+        _method: GET|POST
+
+# -> from @FOSUserBundle/Resources/routing/group.xml
+
+fos_user_group_list:
+    pattern: /groups/list
+    defaults: { _controller: FOSUserBundle:Group:list }
+    requirements:
+        _method: GET
+
+fos_user_group_new:
+    pattern: /groups/new
+    pattern:
+    defaults: { _controller: FOSUserBundle:Group:new }
+    requirements:
+        _method: GET
+
+fos_user_group_show:
+    pattern: /groups/{groupname}
+    defaults: { _controller: FOSUserBundle:Group:show }
+    requirements:
+        _method: GET
+
+fos_user_group_edit:
+    pattern: /groups/{groupname}/edit
+    defaults: { _controller: FOSUserBundle:Group:edit }
+    requirements:
+        _method: GET|POST
+
+fos_user_group_delete:
+    pattern: /groups/{groupname}/delete
+    defaults: { _controller: FOSUserBundle:Group:delete }
+    requirements:
+        _method: GET
+
+# -> from @FOSUserBundle/Resources/routing/profile.xml
+
+fos_user_profile_show:
+    pattern: /profile/show
+    defaults: { _controller: FOSUserBundle:Profile:show }
+    requirements:
+        _method: GET
+
+fos_user_profile_edit:
+    pattern: /profile/edit
+    defaults: { _controller: FOSUserBundle:Profile:edit }
+    requirements:
+        _method: GET|POST
+
+# -> from @FOSUserBundle/Resources/routing/registration.xml
+
+fos_user_registration_register:
+    pattern: /registration
+    defaults: { _controller: FOSUserBundle:Registration:register }
+    requirements:
+        _method: GET|POST
+
+fos_user_registration_check_email:
+    pattern: /registration/check-email
+    defaults: { _controller: FOSUserBundle:Registration:checkEmail }
+    requirements:
+        _method: GET
+
+fos_user_registration_confirm:
+    pattern: /registration/confirm/{token}
+    defaults: { _controller: FOSUserBundle:Registration:confirm }
+    requirements:
+        _method: GET
+
+fos_user_registration_confirmed:
+    pattern: /registration/confirmed
+    defaults: { _controller: FOSUserBundle:Registration:confirmed }
+    requirements:
+        _method: GET
+
+# -> from @FOSUserBundle/Resources/routing/resetting.xml
+
+fos_user_resetting_request:
+    pattern: /profile/password/reset
+    defaults: { _controller: FOSUserBundle:Resetting:request }
+    requirements:
+        _method: GET
+
+fos_user_resetting_send_email:
+    pattern: /profile/password/reset
+    defaults: { _controller: FOSUserBundle:Resetting:sendEmail }
+    requirements:
+        _method: POST
+
+fos_user_resetting_check_email:
+    pattern: /profile/password/reset/check-email
+    defaults: { _controller: FOSUserBundle:Registration:checkEmail }
+    requirements:
+        _method: GET
+
+fos_user_resetting_reset:
+    pattern: /profile/password/reset/{token}
+    defaults: { _controller: FOSUserBundle:Registration:reset }
+    requirements:
+        _method: GET|POST
+
+# -> from @FOSUserBundle/Resources/routing/security.xml
+
+fos_user_security_login:
+    pattern: /oauth/v2/auth_login
+    defaults: { _controller: FOSUserBundle:Security:login }
+    requirements:
+        _method: GET|POST
+
+fos_user_security_check:
+    pattern: /oauth/v2/auth_login_check
+    defaults: { _controller: FOSUserBundle:Security:check }
+
+fos_user_resetting_reset:
+    pattern: /logout
+    defaults: { _controller: FOSUserBundle:Security:logout }
+    requirements:
+        _method: GET|POST
 
 wbi_rest:
     resource: "routing_rest.yml"

@@ -39,7 +39,12 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface, Ordered
             ->setEmailCanonical("boumaiza.majdi@gmail.com")
             ->setRoles(array('ROLE_API', 'ROLE_ADMIN'))
             ->setEnabled(true);
-//        $user->setSalt(md5(uniqid()));
+
+        $user->setUsername('majdi')
+            ->setEmail("boumaiza.majdi1@gmail.com")
+            ->setEmailCanonical("boumaiza.majdi1@gmail.com")
+            ->setRoles(array('ROLE_API'))
+            ->setEnabled(true);
 
         $encoder = $this->container->get('security.password_encoder');
         $password = $encoder->encodePassword($user, 'admin');

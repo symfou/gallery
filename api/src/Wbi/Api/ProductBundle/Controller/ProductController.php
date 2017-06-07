@@ -16,12 +16,30 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use Wbi\Api\ProductBundle\Entity\Product;
 use Wbi\Api\ProductBundle\Exception\InvalidFormException;
+use Wbi\Api\ProductBundle\Form\ProductGalleryType;
 use Wbi\Api\ProductBundle\Form\ProductType;
 use Wbi\Api\ProductBundle\Model\ProductInterface;
+use FOS\RestBundle\Controller\Annotations as fos;
 
 
 class ProductController extends FOSRestController
 {
+
+
+    /**
+     * @param Request $request
+     * @return
+     * @fos\Get("/checkUser")
+     */
+    public function checkValiditiesAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $token = $this->get('security.token_storage')->getToken();
+        $user = $token->getUser();
+
+        $view = $this->view($user, 200);
+        return $this->handleView($view);
+    }
     /**
      * List all products.
      *
@@ -50,6 +68,8 @@ class ProductController extends FOSRestController
         $offset = null == $offset ? 0 : $offset;
         $limit = $paramFetcher->get('limit');
 
+//        $user = $this->get('security.token_storage')>getToken()->getUser();
+
         return $this->container->get('wbi_api_product.product.handler')->all($limit, $offset);
     }
 
@@ -74,11 +94,20 @@ class ProductController extends FOSRestController
      *
      * @throws NotFoundHttpException when product not exist
      */
-    public function getProductAction($id)
+    public function getProductAction(Request $request, $id)
     {
+        $allow = $request->get('a');
+
         $product = $this->getOr404($id);
 
-        return $product;
+        $view = $this->view($product, 200);
+        if ($allow) {
+            $view->setHeaders(array(
+//                'Access-Control-Allow-Origin' => '*',
+                'Access-Control-Allow-Origin' => "http://majdi.com:3000"
+            ));
+        }
+        return $this->handleView($view);
     }
 
     /**
@@ -145,16 +174,22 @@ class ProductController extends FOSRestController
 
             $routeOptions = array(
                 'id' => $newProduct->getId(),
+                'a' => true, //allow CROS
                 '_format' => $request->get('_format')
             );
+            //TODO on peut utiliser la redirection automatique mais le cross orifgin pose porb ...
+            return $this->routeRedirectView('api_product_get_product', $routeOptions, Codes::HTTP_CREATED, array(
 
-            return $this->routeRedirectView('api_product_get_product', $routeOptions, Codes::HTTP_CREATED);
+            ));
 
         } catch (InvalidFormException $exception) {
 
             return $exception->getForm();
         }
     }
+
+
+    
 
     /**
      * Update existing product from the submitted data or create a new product at a specific location.
@@ -183,8 +218,6 @@ class ProductController extends FOSRestController
      */
     public function putProductAction(Request $request, $id)
     {
-//        $form = new ProductType('');
-//        var_dump($request->request->get($form->getName()));die;
         try {
             $form = new ProductType('');
             if (!($product = $this->container->get('wbi_api_product.product.handler')->get($id))) {
@@ -195,19 +228,21 @@ class ProductController extends FOSRestController
             } else {
 
                 $statusCode = Codes::HTTP_NO_CONTENT;
-                //var_dump($request->request->all());die;
                 $product = $this->container->get('wbi_api_product.product.handler')->put(
                     $product,
                     $request->request->get($form->getName())
                 );
             }
 
-            $routeOptions = array(
+            /*$routeOptions = array(
                 'id' => $product->getId(),
+                'a' => true, //allow CROS
                 '_format' => $request->get('_format')
             );
 
-            return $this->routeRedirectView('api_product_get_product', $routeOptions, $statusCode);
+            return $this->routeRedirectView('api_product_get_product', $routeOptions, Codes::HTTP_CREATED, array(
+
+            ));*/
 
         } catch (InvalidFormException $exception) {
 
@@ -250,10 +285,12 @@ class ProductController extends FOSRestController
 
             $routeOptions = array(
                 'id' => $product->getId(),
+                'a' => true, //allow CROS
                 '_format' => $request->get('_format')
             );
 
-            return $this->routeRedirectView('api_product_get_product', $routeOptions, Codes::HTTP_NO_CONTENT);
+            $view = $this->view($product, 200);
+            return $this->handleView($view);
 
         } catch (InvalidFormException $exception) {
 

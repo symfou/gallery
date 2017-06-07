@@ -9,7 +9,7 @@
       .config(routeConfig);
 
   /** @ngInject */
-  function routeConfig($stateProvider) {
+  function routeConfig($stateProvider, $authProvider, checkLoginProvider) {
     $stateProvider
         .state('dashboard', {
           url: '/dashboard',
@@ -19,6 +19,9 @@
             icon: 'ion-android-home',
             order: 0,
           },
+            resolve: {
+                loginRequired: checkLoginProvider.checker.loginRequired
+            }
         });
   }
 

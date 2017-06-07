@@ -1,6 +1,8 @@
 'use strict';
 
 angular.module('BlurAdmin', [
+    'ngImgCrop',
+        'ngFileUpload',
       'ngProgress',
   'satellizer',
   'ngResource',
@@ -20,11 +22,16 @@ angular.module('BlurAdmin', [
   'BlurAdmin.theme',
   'BlurAdmin.pages'
 ])
-    .constant('apiPrefix', '/api/app_dev.php')
+    .constant('API_PREFIX', '/api/app_dev.php')
+    .constant('API_IMAGE_PREFIX', '/api/')
+    .constant('DEFAULT_PRODUCT_IMAGE', 'bundles/wbiapiproduct/images/thumbnail-default.jpg')
     .constant("OAUTH2", {
-      "CLIENT_ID": "11_4lit6kyrv86cwgw8cc0c8ogwgws0oookk0o40kccww840s00wc",
-      "CLIENT_SECRET": "30wn0vfonj0g0wgckw4okggk88w8888o0c4o8kgksw08kgww4s",
-      "GRANT_TYPE": "password"
+        "CLIENT_ID": "8_194gg64aqu3o4o8c44s888o4sk0scko0w48s80gcoog4gg4gow",
+        "AUTH_URL": "http://majdi.com:8085/auth/app_dev.php/admin/oauth/v2/auth/",
+        "AUTH_SIGNOUT_URL": "http://majdi.com:8085/auth/app_dev.php/logout",
+        "AUTH_SIGNIN_URL": "http://majdi.com:8085/auth/app_dev.php/login",
+        "AUTH_BASE_URL": "http://majdi.com:8085/auth/app_dev.php/",
+        "RESPENSE_TYPE": "token"
     })
 
 .config(function($stateProvider, $urlRouterProvider, $authProvider) {

@@ -9,7 +9,6 @@
 
     /** @ngInject */
     function routeConfig($stateProvider, $authProvider, checkLoginProvider) {
-        //console.log(checkLoginProvider.checker.skipIfLoggedIn);
 
 
         $stateProvider
@@ -33,9 +32,9 @@
                 },
                 controller: 'ProductsPageCtrl',
                 controllerAs: "ProductsPageCtrl",
-                resolve: {
+                /*resolve: {
                     loginRequired: checkLoginProvider.checker.loginRequired
-                }
+                }*/
             })
 
             .state('products.detail', {

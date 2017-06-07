@@ -9,6 +9,8 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Wbi\Api\ProductBundle\Entity\Product;
+use Wbi\Api\ProductBundle\Entity\ProductGallery;
+use Wbi\Api\ProductBundle\Entity\ProductInfo;
 use Wbi\Api\UserBundle\Entity\User;
 
 /**
@@ -35,19 +37,37 @@ class LoadProductData implements FixtureInterface, ContainerAwareInterface, Orde
     {
 
         for ($i = 1; $i <= 100 ; $i++) {
+
+            //infos
+            $productInfo = new ProductInfo();
+            $productInfo
+                ->setPrice(120.30)
+                ->setVatRate(18.4)
+                ->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ')
+            ;
+
+            //gallery
+            $productGallery = new ProductGallery();
+            $productGallery
+                ->setUrl('/image.jpg')
+            ;
+            
             $product = new Product();
             $product
                 ->setCode('00'.$i)
                 ->setName('my product '.$i)
-                ->setPrice(120.30)
-                ->setShortDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ')
-                ->setEnabled(true)
+                ->setShortDescription('Lorem ipsum dolor sit amet.')
+                ->setIsEnabled(true)
                 ->setSlug('my product from '.$i)
-                ->setVatRate(18.4)
                 ->setIsPublished(true)
-
+//                ->setInfos($productInfo)
                 ;
+            $product->setInfos($productInfo);
+            //$product->addProductGallery($productGallery);
 
+            
+            
+            
 
             $manager->persist($product);
         }

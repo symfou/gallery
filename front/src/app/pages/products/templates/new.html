@@ -3,9 +3,15 @@
         <div class="panel-heading">new product</div>
         <div class="panel-body">
             <legend><i class="ion-clipboard"></i> create product</legend>
-            <form method="post" ng-submit="createProduct(product)">
-            <product-form></product-form>
-                </form>
+            <form name="productEditForm" novalidate onsubmit="return false;">
+                <wbi-server-input form="productEditForm.code" field-model="product.code" field-name="code" field-error-message="errors.code" field-label="Code" field-placeholder="Code" field-type="text"></wbi-server-input>
+                <wbi-server-input form="productEditForm.name" field-model="product.name" field-name="name" field-error-message="errors.name" field-label="Name" field-placeholder="Name" field-type="text"></wbi-server-input>
+                <wbi-server-input form="productEditForm.short_description" field-model="product.short_description" field-name="short_description" field-error-message="errors.short_description" field-label="Short description" field-placeholder="Short description" field-type="textarea"></wbi-server-input>
+            </form>
+
+            <button type="button" class="btn btn-primary btn-with-icon save-profile" ng-click="createProduct(product, productEditForm)">
+                <i class="ion-android-checkmark-circle"></i> Continue
+            </button>
         </div>
     </div>
 </div>

@@ -9,7 +9,7 @@
     .config(routeConfig);
 
   /** @ngInject */
-  function routeConfig($stateProvider,$urlRouterProvider) {
+  function routeConfig($stateProvider,$urlRouterProvider, $authProvider, checkLoginProvider) {
     $stateProvider
         .state('components.mail', {
           url: '/mail',
@@ -21,18 +21,31 @@
           sidebarMeta: {
             order: 0,
           },
-        }).state('components.mail.label', {
+            resolve: {
+                loginRequired: checkLoginProvider.checker.loginRequired
+            }
+        })
+        
+        .state('components.mail.label', {
           url: '/:label',
           templateUrl: 'app/pages/components/mail/list/mailList.html',
           title: 'Mail',
           controller: "MailListCtrl",
-          controllerAs: "listCtrl"
-        }).state('components.mail.detail', {
+          controllerAs: "listCtrl",
+        resolve: {
+            loginRequired: checkLoginProvider.checker.loginRequired
+        }
+        })
+        
+        .state('components.mail.detail', {
           url: '/:label/:id',
           templateUrl: 'app/pages/components/mail/detail/mailDetail.html',
           title: 'Mail',
           controller: "MailDetailCtrl",
-          controllerAs: "detailCtrl"
+          controllerAs: "detailCtrl",
+        resolve: {
+            loginRequired: checkLoginProvider.checker.loginRequired
+        }
         });
     $urlRouterProvider.when('/components/mail','/components/mail/inbox');
   }
